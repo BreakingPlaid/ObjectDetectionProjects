@@ -6,7 +6,7 @@ Repository for object depository projects
 
 This script demonstrates how to use the **YOLOv12** model for object detection, including setup, model training, evaluation, and inference. It integrates **Supervision** for visualization and performance metrics.
 
-## 📌 Features
+## Features
 - Sets up the environment and checks for GPU availability.
 - Installs required dependencies.
 - Downloads and preprocesses an example dataset.
@@ -17,50 +17,50 @@ This script demonstrates how to use the **YOLOv12** model for object detection, 
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
-### 1️⃣ Install Dependencies
+### 1️ Install Dependencies
 Ensure you have the required packages installed (uncomment in the script if needed).
 ```bash
 pip install git+https://github.com/sunsmarterjie/yolov12.git supervision flash-attn
 ```
 
-2️⃣ Check GPU Availability
+2️ Check GPU Availability
 The script attempts to detect an NVIDIA GPU:
 
 python
 subprocess.run(["nvidia-smi"])
 If not found, a warning is printed.
 
-3️⃣ Set API Key (Optional)
+3️ Set API Key (Optional)
 If an API key is required for accessing YOLOv12:
 
 python
 os.environ["YOLOV12_API_KEY"] = "your_api_key_here"
-📥 Download & Prepare Data
-4️⃣ Download Example Image
+Download & Prepare Data
+4️ Download Example Image
 An example dog image is downloaded for inference.
 
 bash
 wget -O dog.jpeg https://media.example.com/notebooks/examples/dog.jpeg
 
-5️⃣ Download Dataset (Replace with actual URL)
+5️ Download Dataset (Replace with actual URL)
 bash
 wget -O dataset.zip https://your-dataset-link.com
 unzip dataset.zip -d dataset
 This dataset will be used for training the YOLO model.
 
-6️⃣ Update data.yaml for YOLOv12 Compatibility
+6️ Update data.yaml for YOLOv12 Compatibility
 bash
 sed -i "$d" dataset/data.yaml
 echo -e 'test: ../test/images\ntrain: ../train/images\nval: ../valid/images' >> dataset/data.yaml
 This ensures the dataset is correctly formatted for YOLOv12 training.
 
-🔥 Run YOLOv12 Inference
-7️⃣ Load YOLOv12 Model
+Run YOLOv12 Inference
+7️ Load YOLOv12 Model
 python
 model = YOLO('yolov12l.pt')
-8️⃣ Perform Object Detection
+8️ Perform Object Detection
 python
 ```
 results = model(image, verbose=False)[0]
@@ -76,8 +76,8 @@ sv.plot_image(annotated_image)
 ```
 This will display the detected objects on the image.
 
-🏋 Train YOLOv12 on a Custom Dataset
-9️⃣ Train Model with Custom Data
+Train YOLOv12 on a Custom Dataset
+9️ Train Model with Custom Data
 python
 ```
 model = YOLO('yolov12s.yaml')
@@ -85,15 +85,15 @@ results = model.train(data='dataset/data.yaml', epochs=100)
 ```
 The model is trained for 100 epochs using the downloaded dataset.
 
-📊 Model Evaluation
-🔟 Check Training Results
+Model Evaluation
+10 Check Training Results
 bash
 ```
 ls runs/detect/train/
 ```
 Results are stored in runs/detect/train/.
 
-1️⃣1️⃣ Display Training Performance
+11 Display Training Performance
 The script visualizes:
 
 Confusion Matrix (confusion_matrix.png)
@@ -105,7 +105,7 @@ plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
 plt.show()
 ```
 
-1️⃣2️⃣ Compute Mean Average Precision (mAP)
+11 Compute Mean Average Precision (mAP)
 mAP is a key metric for object detection performance.
 
 python
@@ -119,12 +119,12 @@ map.plot()
 This evaluates the model across different confidence thresholds.
 
 🏁 Run Inference with Fine-Tuned Model
-1️⃣3️⃣ Load Best Model
+13 Load Best Model
 python
 ```
 model = YOLO('runs/detect/train/weights/best.pt')
 ```
-1️⃣4️⃣ Perform Detection on Random Image
+14 Perform Detection on Random Image
 python
 ```
 i = random.randint(0, len(ds))
@@ -140,7 +140,7 @@ annotated_image = box_annotator.annotate(scene=image.copy(), detections=detectio
 annotated_image = label_annotator.annotate(scene=annotated_image, detections=detections)
 sv.plot_image(annotated_image)
 ```
-🎯 Summary
+Summary
 This script:
 
 Prepares an object detection dataset.
@@ -152,7 +152,7 @@ Runs inference with the trained model.
 YOLOv12 GitHub
 Supervision Documentation
 mAP Metric
-📝 Notes
+Notes
 Ensure NVIDIA drivers and CUDA are installed for GPU acceleration.
 Replace placeholder dataset URLs with real links.
 Adjust training epochs based on dataset size.
